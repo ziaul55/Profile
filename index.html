@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Biomedical Vision and Learning Group | Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="index.html">Biomedical Vision and Learning</a>
+    <a class="link on" href="index.html" aria-current="page">Home</a>
+    <a class="link" href="pubs.html">Publications</a>
+    <a class="link" href="people.html">People</a>
+    <a class="link" href="bio.html">Biography</a>
+    <a class="link" href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<main id="home">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Biomedical Vision and Learning Group</h1>
+        <p class="lead">Teaching computers to see, measure and understand medical images.</p>
+        <div class="affil">
+          <strong>Center for Machine Vision and Signal Analysis (CMVS)</strong><br>
+          University of Oulu, Finland<br>
+          P.O. Box 8000, FI-90014 University of Oulu
+        </div>
+      </div>
+      <figure style="margin:0">
+        <svg class="field" id="field" viewBox="0 0 400 400" role="img" aria-label="Illustration of stained tissue cells with dashed outlines marking automatically detected regions"></svg>
+        <figcaption class="caption">Stained tissue, with cells outlined by a model.</figcaption>
+      </figure>
+    </div>
+
+    <section id="welcome" aria-labelledby="w">
+      <h2 id="w">Welcome</h2>
+      <div class="cols">
+        <div class="prose">
+          <p>We are a research group within CMVS, led by [Group leader name]. Our work brings computer vision and machine learning to biomedical images, from microscope slides to 3D scans.</p>
+          <p>We build methods that help clinicians and biologists find, count and measure what matters in an image, and we test them on real clinical and laboratory data.</p>
+        </div>
+        <div class="prose">
+          <p>Much of our research asks how to learn well when expert labels are scarce, when data comes from different scanners or hospitals, and when a model must explain why it made a prediction.</p>
+          <p>We share code and data where we can, and we welcome collaboration with clinical and biomedical partners.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="research" aria-labelledby="r">
+      <h2 id="r">Research</h2>
+      <div class="topics">
+        <div>
+          <h3>Medical image analysis</h3>
+          <p>Segmentation, detection and quantification in histopathology, radiology and microscopy images.</p>
+        </div>
+        <div>
+          <h3>Learning with limited labels</h3>
+          <p>Self-supervised, semi-supervised and few-shot methods that make the most of a small set of expert annotations.</p>
+        </div>
+        <div>
+          <h3>Trustworthy and 3D biomedical vision</h3>
+          <p>Reliable predictions across sites and devices, and models that work on volumes, video and multimodal data.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" aria-labelledby="n">
+      <h2 id="n">News</h2>
+      <ul class="news">
+        <li><time datetime="2026-09">2026-9</time><span>[Name] joined the group. Welcome!</span></li>
+        <li><time datetime="2026-06">2026-6</time><span>One paper was accepted to [Conference]. Congratulations to [Name]!</span></li>
+        <li><time datetime="2026-02">2026-2</time><span>[Name] joined the group.</span></li>
+      </ul>
+    </section>
+
+
+  </div>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div>
+      <strong>Biomedical Vision and Learning Group</strong><br>
+      Center for Machine Vision and Signal Analysis (CMVS)<br>
+      University of Oulu, P.O. Box 8000, FI-90014 University of Oulu, Finland<br>
+      Email: [group contact address]
+    </div>
+    <div>&copy; Biomedical Vision and Learning Group</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Deterministic tissue-like field: eosin cytoplasm blobs with hematoxylin nuclei.
+  var svg = document.getElementById("field"), NS = "http://www.w3.org/2000/svg";
+  var seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  function el(n, a, p) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; }
+  function blob(cx, cy, r, wob) {
+    var pts = [], n = 10;
+    for (var i = 0; i < n; i++) {
+      var a = (i / n) * Math.PI * 2, rr = r * (1 - wob + rnd() * wob * 2);
+      pts.push([cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]);
+    }
+    var d = "M" + ((pts[0][0] + pts[n - 1][0]) / 2) + "," + ((pts[0][1] + pts[n - 1][1]) / 2);
+    for (var j = 0; j < n; j++) {
+      var p = pts[j], q = pts[(j + 1) % n];
+      d += " Q" + p[0] + "," + p[1] + " " + ((p[0] + q[0]) / 2) + "," + ((p[1] + q[1]) / 2);
+    }
+    return d + "Z";
+  }
+  var cols = 5, rows = 5, cell = 400 / cols, outlined = [3, 8, 12, 17, 21];
+  for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+    var i = r * cols + c, cx = c * cell + cell / 2 + (rnd() - .5) * 26, cy = r * cell + cell / 2 + (rnd() - .5) * 26;
+    var d = blob(cx, cy, cell * 0.47, 0.14);
+    el("path", { d: d, fill: "#e8a0b8", "fill-opacity": 0.55 + rnd() * 0.3, stroke: "#d9668a", "stroke-opacity": .5, "stroke-width": 1 });
+    el("path", { d: blob(cx + (rnd() - .5) * 8, cy + (rnd() - .5) * 8, cell * 0.2, 0.12), fill: "#3b2f63", "fill-opacity": 0.9 });
+    if (outlined.indexOf(i) > -1) el("path", { d: blob(cx, cy, cell * 0.5, 0.03), "class": "contour", pathLength: 400 });
+  }
+})();
+</script>
+</body>
+</html>
